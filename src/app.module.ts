@@ -12,9 +12,13 @@ import { HttpService } from './http/http.service';
 import { CatsModule } from './cats/cats.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { CatsController } from './cats/cats.controller';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { RolesGuard } from './common/guard/roles/roles.guard';
+import { LoggingInterceptor } from './common/interceptor/logging/logging.interceptor';
+import { GlobalConfigModule } from './global-config/global-config.module';
 
 @Module({
-  imports: [CatsModule],
+  imports: [CatsModule, GlobalConfigModule],
   controllers: [AppController, DogController, AccountController],
   providers: [AppService, HttpService],
 })

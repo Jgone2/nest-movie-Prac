@@ -9,19 +9,21 @@ import {
   HttpException,
   HttpStatus,
   ParseIntPipe,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto, Cat } from './persistence';
 import { CatsService } from './application/cats.service';
+import { Roles } from '../common/decorator/roles/roles.decorator';
+import { RolesGuard } from '../common/guard/roles/roles.guard';
 
 @Controller('cats')
+@UseGuards(RolesGuard)
 export class CatsController {
   constructor(private catsService: CatsService) {}
-  // @Post()
-  // create(): string {
-  //   return 'This action adds a new cat';
-  // }
 
   @Post()
+  // @Roles(['admin'])
   async create(@Body() createCatDto: CreateCatDto) {
     console.log(createCatDto);
     this.catsService.create(createCatDto);
